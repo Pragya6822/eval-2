@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Product Dynamic Web page</title>
+    <script
+      src="https://kit.fontawesome.com/8e2a4fca49.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1 style="text-align: center">My Dynamic Product Web Application</h1>
+    <div id="container">
+      <div class="child-container">
+        <header>
+          <div class="header">
+            <div class="search">
+              <!--Products search/filter-->
+              <input
+                type="text"
+                id="search"
+                placeholder="Search for products..."
+              />
+              <button id="search-btn">Search</button>
+            </div>
+            <button id="createbtn"> Create New Product
+            </button>
+            <button id="logoutbtn" onclick="logout()">Logout</button>
+            <div class="cart" onclick="toggleCart()">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+          </div>
+        </header>
+
+        <!-- add new product -->
+        <form id="productForm" class="hidden">
+            <input type="text" id="productTitle" placeholder="Product Name..." required>
+            <input type="text" id="productdescription" placeholder="Description..." required>
+            <input type="number" id="price" placeholder="Price in $..." required>
+            <input type="number" id="strikeprice" placeholder="Strike-Price in $..." required>
+            <input type="number" id="quantity" placeholder="Quantity" required>
+            <label for="category">
+                <select id="category" >
+                <option value="">Select category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Wearables">Wearables</option>
+                <option value="Home Appliances">Home Appliances</option>
+                <option value="Cameras">Cameras</option>
+                <option value="other">Others</option>
+              </select>
+            </label>
+            <input type="file" id="image" placeholder="Upload product image" required>
+            
+            <button type="submit">Save</button>
+            <button  id="cancelproductBtn" >Cancel</button>
+        </form>
+        <!-- <div id="product-container"></div> -->
+
+
+
+        <section>
+          <!-- sorting for product -->
+          <div class="sort-select">
+            <label for="sort">Sort By:</label>
+            <select id="sort" onchange="sortProducts()">
+              <option value="">Select</option>
+              <option value="az">A-Z</option>
+              <option value="za">Z-A</option>
+              <option value="priceLowHigh">Price Low to High</option>
+              <option value="priceHighLow">Price High to Low</option>
+            </select>
+          </div>
+          <div id="product-container">
+            <!-- Products will be fetched dynamically from Firebase -->
+          </div>
+        </section>
+
+        <!-- Cart Popup -->
+
+        <div id="cart-popup" class="cart-popup" style="display: none">
+          <h2>Your Cart</h2>
+          <div id="cart-container"></div>
+          <p id="total"></p>
+          <button onclick="toggleCart()">Close Cart</button>
+        </div>
+
+        
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Title Styling */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Form Styling */
+form {
+    width: 100%;
+    max-width: 350px;
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label and Input Styling */
+label {
+    display: block;
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: 500;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-top: 0.5em;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007acc;
+    outline: none;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007acc;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1em;
+}
+
+button:hover {
+    background-color: #005f99;
+}
+
+/* Message Styling */
+#message {
+    margin-top: 1em;
+    text-align: center;
+    color: #e63946;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+</style>
+<body>
+    <h2>Login Page</h2>
+    <form id="loginform">
+        <label for="username">
+          User Name:
+          <input type="text" id="username" placeholder="Enter your name..." required />
+        </label>
+        <label for="email">
+          Email:
+          <input type="email" id="email" placeholder="Enter your email..." required />
+        </label>
+        <label for="password">
+          Password:
+          <input type="password" id="password" placeholder="Enter password..." required />
+        </label>
+        <button type="submit">Login</button>
+    </form>
+    <p id="message"></p>
+</body>
+</html>
+
+<script>
+    document.getElementById("loginform").addEventListener("submit", login);
+
+    function login(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const API_KEY = "AIzaSyDK-1ny4EDZCxiniKJUVwYDI6rB6VEmsrQ";
+
+        // Check if entered email matches the saved signup email
+        const signupEmail = localStorage.getItem("signupEmail");
+        if (email !== signupEmail) {
+            alert("Email does not match the registered email.");
+            return;
+        }
+
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, returnSecureToken: true })
+        };
+
+        fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, requestOptions)
+            .then((resp) => resp.json())
+            .then((res) => {
+                if (res.error) {
+                    document.getElementById("message").innerText = "Wrong User credentials";
+                } else {
+                    // Redirect to the product page on successful login
+                    window.location.href = "product.html";
+                }
+            })
+            .catch((err) => console.error("Error:", err));
+    }
+</script>
